@@ -8,6 +8,10 @@ var CONTACTS_COLLECTION = "contacts";
 var app = express();
 app.use(bodyParser.json());
 
+// Link to angular build dir
+var distDir = __dirname = "/dist/";
+app.use(express.static(distDir));
+
 // Create a database variable to reuse the connection pool
 var db;
 
@@ -41,9 +45,9 @@ function handleError(res, reason, message, code) {
 app.get("/api/contacts", function(req, res) {
     db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
         if (err) {
-            handleError(res, err.message, "Failed to get contacts.")
+            handleError(res, err.message, "Failed to get contacts.");
         } else {
-            res.status(200).json(docs)
+            res.status(200).json(docs);
         }
     });
 });
@@ -67,13 +71,36 @@ app.post("/api/contacts", function(req, res) {
 
 // Contacts by ID
 app.get("/api/contacts/:id", function(req, res) {
-    
+    db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id )}, function(err, doc) {
+        if (err) {
+            handleError(res, err.message, "Failed to get contact");
+        } else {
+            res.status(200).json(doc);
+        }
+    })
 });
 
 app.put("/api/contacts/:id", function(req, res) {
+    var updateDoc = req.body;
+    delete updateDoc._id;
+    
+    db.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+        if (err) {
+            handleError(res, err.message, "Failed to update contact");
+        } else {
+            updateDoc._id = req.params.id;
+            res.status(200).json(updateDoc);
+        }
+    })
     
 });
 
 app.delete("/api/contacts/:id", function(req, res) {
-    
+    db.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result){
+        if (err) {
+            handleError(res, err.message, "Failed to delete contact");
+        } else {
+            res.status(200).json(req.params.id);
+        }
+    })
 });
