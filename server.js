@@ -9,7 +9,7 @@ var app = express();
 app.use(bodyParser.json());
 
 // Link to angular build dir
-var distDir = __dirname = "/dist/";
+var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
 // Create a database variable to reuse the connection pool
