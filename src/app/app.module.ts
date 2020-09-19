@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
+import { NgParticlesModule } from "ng-particles";
 
 import { AppComponent } from './app.component';
 import { ContactDetailsComponent } from './contacts/contact-details/contact-details.component';
@@ -16,7 +17,8 @@ import { ContactListComponent } from './contacts/contact-list/contact-list.compo
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgParticlesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
