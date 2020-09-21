@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-5">
+      <h2>CGI UK Volunteering Events </h2>
+      <ul class="list-group">
+        <li class="list-group-item"
+          *ngFor="let event of events"
+          (click)="selectEvent(event)"
+          [class.active]="event === selectedEvent">
+          {{event.name}}
+        </li>
+      </ul>
+      <button class="btn btn-warning" (click)="createNewEvent()">New</button>
+    </div>
+    <div class="col-md-5 col-md-offset-2">
+      <event-details
+        [event]="selectedEvent"
+        [createHandler]="addEvent"
+        [updateHandler]="updateEvent"
+        [deleteHandler]="deleteEvent">
+      </event-details>
+    </div>
+  </div>

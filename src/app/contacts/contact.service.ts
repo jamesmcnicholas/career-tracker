@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Contact } from './contact';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ContactService {
