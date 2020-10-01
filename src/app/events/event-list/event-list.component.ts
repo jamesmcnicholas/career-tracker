@@ -13,19 +13,23 @@ import { EventDetailsComponent } from '../event-details/event-details.component'
 export class EventListComponent implements OnInit {
   events: Event[]
   selectedEvent: Event
-  
-  constructor(private eventService: EventService) { }
+
+  constructor(private eventService: EventService) {
+    this.events = [];
+  }
 
   ngOnInit(): void {
     this.eventService.getEvents()
-    .then((events: Event[]) => {
-      this.events = events.map((event) => {
-        if (!event.phone) {
-          event.phone = ''
+      .then((events: Event[]) => {
+        if (events) {
+          this.events = events.map((event) => {
+            if (!event.phone) {
+              event.phone = ''
+            }
+            return event;
+          });
         }
-        return event;
       });
-    });
   }
 
   private getIndexOfEvent = (eventId: string) => {
@@ -33,11 +37,11 @@ export class EventListComponent implements OnInit {
       return event._id === eventId;
     });
   }
-  
+
   selectEvent(event: Event) {
     this.selectedEvent = event;
   }
-  
+
   createNewEvent() {
     var event: Event = {
       name: '',
@@ -45,25 +49,25 @@ export class EventListComponent implements OnInit {
       phone: '',
       date: new Date()
     };
-    
+
     this.selectedEvent = event;
   }
-  
+
   deleteEvent = (eventId: string) => {
     var idx = this.getIndexOfEvent(eventId);
-    if(idx !== -1) {
+    if (idx !== -1) {
       this.events.splice(idx, 1);
       this.selectEvent(null);
       return this.events;
     }
   }
-  
+
   addEvent = (event: Event) => {
     this.events.push(event);
     this.selectEvent(event);
     return this.events;
   }
-  
+
   updateEvent = (event: Event) => {
     var idx = this.getIndexOfEvent(event._id);
     if (idx !== -1) {
@@ -72,5 +76,5 @@ export class EventListComponent implements OnInit {
     }
     return this.events;
   }
-  
+
 }

@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Event } from './event';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../src/environments/environment'
 
 @Injectable()
 export class EventService {
   private eventsUrl = '/api/events';
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.eventsUrl = environment.serverurl + this.eventsUrl
+   }
   
   // GET /api/events
   getEvents(): Promise<void | Event[]> {
-    return this.http.get(this.eventsUrl, {observe: 'body' ,responseType: 'json'}).toPromise()
-    .then(response => response as Event[])
+    return this.http.get(this.eventsUrl, { observe: 'body' ,responseType: 'json'}).toPromise()
+    .then((response: Event[]) => response)
     .catch(this.handleError);
   }
   

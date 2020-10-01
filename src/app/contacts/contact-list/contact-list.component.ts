@@ -19,6 +19,7 @@ export class ContactListComponent implements OnInit {
   ngOnInit(): void {
     this.contactSerice.getContacts()
     .then((contacts: Contact[]) => {
+      if (contacts) {
       this.contacts = contacts.map((contact) => {
         if (!contact.phone) {
           contact.phone = {
@@ -28,6 +29,7 @@ export class ContactListComponent implements OnInit {
         }
         return contact;
       });
+    }
     });
   }
   
