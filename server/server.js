@@ -1,12 +1,14 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
+var cors = require('cors');
 var ObjectID = mongodb.ObjectID;
 
 var CONTACTS_COLLECTION = "contacts";
 var EVENTS_COLLECTION = "events";
 
 var app = express();
+app.use(cors())
 app.use(bodyParser.json());
 
 // Link to angular build dir
@@ -17,18 +19,25 @@ app.use(express.static(distDir));
 var db;
 
 // Connect to DB
-mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/test", function(err, client) {
-    if (err) {
-        console.log(err);
-        process.exit(1);
-    }
+mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://mongo:27017/test", {
+    autoReconnect: true,
+    // retry to connect for 60 times
+    reconnectTries: 60,
+    // wait 1 second before retrying
+    reconnectInterval: 1000
+    },
+    function(err, client) {
+        if (err) {
+            console.log(err);
+            process.exit(1)
+        }
     
     // Save database object
     db = client.db();
     console.log("DB connection established");
     
-    // Initialize the app
-    var server = app.listen(process.env.PORT || 8080, function() {
+    // Initialise the app
+    var server = app.listen(process.env.PORT || 3000, function() {
         var port = server.address.port;
         console.log("App now running on port", port);
     });
