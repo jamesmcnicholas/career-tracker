@@ -4,8 +4,9 @@ var mongodb = require("mongodb");
 var cors = require('cors');
 var ObjectID = mongodb.ObjectID;
 
-var CONTACTS_COLLECTION = "contacts";
+var STREAMS_COLLECTION = "streams";
 var EVENTS_COLLECTION = "events";
+var TASKS_COLLECTION = "tasks"
 
 var app = express();
 app.use(cors())
@@ -51,27 +52,27 @@ function handleError(res, reason, message, code) {
     res.status(code || 500).json({"error": message});
 }
 
-// Contacts
-app.get("/api/contacts", function(req, res) {
-    db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+// Streams
+app.get("/api/streams", function(req, res) {
+    db.collection(STREAMS_COLLECTION).find({}).toArray(function(err, docs) {
         if (err) {
-            handleError(res, err.message, "Failed to get contacts.");
+            handleError(res, err.message, "Failed to get streams.");
         } else {
             res.status(200).json(docs);
         }
     });
 });
 
-app.post("/api/contacts", function(req, res) {
-    var newContact = req.body;
-    newContact.createDate = new Date();
+app.post("/api/streams", function(req, res) {
+    var newStream = req.body;
+    newStream.createDate = new Date();
     
     if (!req.body.name) {
         handleError(res, "Invalid user input", "Must provide name", 400);
     } else {
-        db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc){
+        db.collection(STREAMS_COLLECTION).insertOne(newStream, function(err, doc){
             if (err) {
-                handleError(res, err.message, "Failed to create new contact");
+                handleError(res, err.message, "Failed to create new stream");
             }  else {
                 res.status(201).json(doc.ops[0]);
             }
@@ -79,24 +80,24 @@ app.post("/api/contacts", function(req, res) {
     }
 });
 
-// Contacts by ID
-app.get("/api/contacts/:id", function(req, res) {
-    db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id )}, function(err, doc) {
+// Streams by ID
+app.get("/api/streams/:id", function(req, res) {
+    db.collection(STREAMS_COLLECTION).findOne({ _id: new ObjectID(req.params.id )}, function(err, doc) {
         if (err) {
-            handleError(res, err.message, "Failed to get contact");
+            handleError(res, err.message, "Failed to get stream");
         } else {
             res.status(200).json(doc);
         }
     })
 });
 
-app.put("/api/contacts/:id", function(req, res) {
+app.put("/api/streams/:id", function(req, res) {
     var updateDoc = req.body;
     delete updateDoc._id;
     
-    db.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    db.collection(STREAMS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, function(err, result) {
         if (err) {
-            handleError(res, err.message, "Failed to update contact");
+            handleError(res, err.message, "Failed to update stream");
         } else {
             updateDoc._id = req.params.id;
             res.status(200).json(updateDoc);
@@ -105,10 +106,10 @@ app.put("/api/contacts/:id", function(req, res) {
     
 });
 
-app.delete("/api/contacts/:id", function(req, res) {
-    db.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result){
+app.delete("/api/streams/:id", function(req, res) {
+    db.collection(STREAMS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result){
         if (err) {
-            handleError(res, err.message, "Failed to delete contact");
+            handleError(res, err.message, "Failed to delete stream");
         } else {
             res.status(200).json(req.params.id);
         }
@@ -166,7 +167,6 @@ app.put("/api/events/:id", function(req, res) {
             res.status(200).json(updateDoc);
         }
     })
-    
 });
 
 app.delete("/api/events/:id", function(req, res) {
@@ -177,4 +177,31 @@ app.delete("/api/events/:id", function(req, res) {
             res.status(200).json(req.params.id);
         }
     })
+});
+
+// Tasks
+app.get("/api/tasks", function(req, res) {
+    db.collection(TASKS_COLLECTION).find({}).toArray(function(err, docs) {
+        if (err) {
+            handleError(res, err.message, "Failed to get tasks.");
+        } else {
+            res.status(200).json(docs);
+        }
+    });
+});
+
+app.post("/api/tasks", function(req, res) {
+    var newTask = req.body;
+    
+    if (!req.body.description) {
+        handleError(res, "Invalid user input", "Must provide requirement description", 400);
+    } else {
+        db.collection(TASKS_COLLECTION).insertOne(newTask, function(err, doc){
+            if (err) {
+                handleError(res, err.message, "Failed to create new task");
+            }  else {
+                res.status(201).json(doc.ops[0]);
+            }
+        });
+    }
 });

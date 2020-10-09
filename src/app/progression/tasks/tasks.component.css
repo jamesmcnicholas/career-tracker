@@ -1,0 +1,13 @@
+
+.level-row {
+    padding-top: 5rem;
+}
+
+.table-row {
+    display: flex;
+}
+
+.w-100 {
+    width: 100%;
+    padding-left: 1rem;
+}

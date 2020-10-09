@@ -1,22 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 import { AuthGuard } from './common/guards/auth.guard';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-
+import { ProgressionComponent } from './progression/progression.component'
 const routes: Routes = [
     {
-        path: 'home',
-        component: HomePageComponent,
+        path: '',
+        component: ProgressionComponent,
         canActivate: [AuthGuard]
     },
     {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-    },
-    {
         path: '**',
-        redirectTo: 'home'
+        redirectTo: ''
     }
 ]; // sets up routes constant where you define your routes
 

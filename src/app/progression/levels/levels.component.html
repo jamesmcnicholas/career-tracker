@@ -1,0 +1,10 @@
+<div class="list-group">
+    <button 
+        *ngFor='let in of counter(6) ;let i = index'
+        type="button" 
+        class="list-group-item list-group-item-action active" 
+        (click)="selectLevel(i)"
+        [ngClass]="{'active': getSelectedLevel(i)}">
+        Level {{i+1}}
+    </button>
+</div>

@@ -1,0 +1,26 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Requirement</th>
+            <th scope="col">Achieved?</th>
+            <th scope="col">Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let instance of tasks">
+            <th scope="row">{{instance.description}}</th>
+            <td><input type="checkbox" /></td>
+            <td><input type="text" class="form-control" /></td>
+        </tr>
+        <tr>
+            <th><input type="text" class="form-control" ng-model="task.description" placeholder="Description"/></th>
+            <td><button type="button" class="btn btn-primary" (click)="createTask(task)">Add Task</button></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+

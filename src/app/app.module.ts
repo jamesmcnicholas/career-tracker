@@ -9,10 +9,12 @@ import { ContactDetailsComponent } from './contacts/contact-details/contact-deta
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
 import { EventDetailsComponent } from './events/event-details/event-details.component';
 import { EventListComponent } from './events/event-list/event-list.component';
-import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProgressionComponent } from './progression/progression.component';
 import { LevelsComponent } from './progression/levels/levels.component';
+import { StreamsComponent } from './progression/streams/streams.component';
+import { TasksComponent } from './progression/tasks/tasks.component';
+import { TaskService } from './progression/tasks/task.service';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -38,9 +40,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ContactListComponent,
     EventDetailsComponent,
     EventListComponent,
-    HomePageComponent,
     ProgressionComponent,
-    LevelsComponent
+    LevelsComponent,
+    StreamsComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService]
-    }
+    },
+    TaskService
   ],
   bootstrap: [AppComponent]
 })

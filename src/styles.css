@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+#particles-js {
+    background: #E61739;
+    background: linear-gradient(to right, rgba(230,23,57,1) 0%, rgba(255,106,0,1) 100%);
+}
