@@ -64,8 +64,8 @@ export const ParticlesConfig = {
             "mode": "bubble"
         },
         "onclick": {
-            "enable": false,
-            "mode": "push"
+            "enable": true,
+            "mode": "repulse"
         },
         "resize": true
         },

@@ -8,7 +8,7 @@ export const environment = {
   keycloak: {
     baseUrl: 'localhost:4200',
     https: false,
-    url: 'http://keycloak:8080/auth',
+    url: 'http://localhost:8080/auth',
     clientId: 'mean-app-local',
     realm: 'Master'
   },
