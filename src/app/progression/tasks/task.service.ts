@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -12,17 +12,26 @@ export class TaskService {
    }
 
   // GET /api/tasks
-  getTasks(): Promise<void | Task[]> {
+  getAllTasks(): Promise<void | Task[]> {
     return this.http.get(this.tasksUrl, {observe: 'body' ,responseType: 'json'}).toPromise()
+    .then(response => response as Task[])
+    .catch(this.handleError);
+  }
+
+  getTasks(streamId: string, level: string): Promise<void | Task[]> {
+    let params = new HttpParams().set('level', level);
+    // params = params.append('stream', stream)
+    var url = this.tasksUrl + '/' + level;
+    return this.http.get(url, {observe: 'body' ,responseType: 'json'}).toPromise()
     .then(response => response as Task[])
     .catch(this.handleError);
   }
   
   // POST /api/tasks
-  createTask(newTask: Task): Promise<void | Task[]> {
+  createTask(newTask: Task): Promise<void | Task> {
     return this.http.post(this.tasksUrl, newTask, {responseType: 'json'})
       .toPromise()
-      .then(response => response as Task[])
+      .then(response => response as Task)
       .catch(this.handleError);
   }
   

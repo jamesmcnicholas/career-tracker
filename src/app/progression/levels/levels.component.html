@@ -1,6 +1,6 @@
 <div class="list-group">
     <button 
-        *ngFor='let in of counter(6) ;let i = index'
+        *ngFor='let in of counter(7) | slice:1; let i = index;' 
         type="button" 
         class="list-group-item list-group-item-action active" 
         (click)="selectLevel(i)"

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProgressionService } from '../progression.service'
 
 @Component({
   selector: 'levels',
@@ -10,15 +11,20 @@ export class LevelsComponent implements OnInit {
   selectedLevel: Number
   toggle = false;
 
-  constructor() { this.selectedLevel = 0; }
+  constructor(private progressionService: ProgressionService) { 
+    this.selectedLevel = 0;
+    this.progressionService.selectedLevel(this.selectedLevel);
+   }
 
   ngOnInit(): void {
+    this.selectedLevel = 0;
   }
 
   selectLevel(level: Number){
     this.selectedLevel = level;
     this.toggle = !this.toggle;
-    console.log(this.selectedLevel)
+    this.progressionService.selectedLevel(this.selectedLevel);
+    this.progressionService.updateTasks();
   }
 
   counter(i: number) {
