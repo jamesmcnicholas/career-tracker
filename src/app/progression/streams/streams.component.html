@@ -1,5 +1,9 @@
 <div class="list-group">
-    <button type="button" class="list-group-item list-group-item-action">
+    <button 
+        *ngFor='let stream of streams'
+        type="button" 
+        class="list-group-item list-group-item-action"
+        (click)="selectStream(stream)">
         <i class="fas fa-users"></i>
         Project and Service Management</button>
     <button type="button" class="list-group-item list-group-item-action">
@@ -41,4 +45,6 @@
     <button type="button" class="list-group-item list-group-item-action">
         <i class="fas fa-sync-alt"></i>
         Corporate Functions</button>
+    <button type="button" class="btn btn-light">
+        Add Stream</button>
 </div>

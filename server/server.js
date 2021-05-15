@@ -271,7 +271,7 @@ app.put("/api/usertasks/:id", function (req, res) {
     })
 });
 
-app.delete("/api/tasks/:id", function (req, res) {
+app.delete("/api/usertasks/:id", function (req, res) {
     db.collection(TASKS_COLLECTION).deleteOne({ _id: new ObjectID(req.params.id) }, function (err, result) {
         if (err) {
             handleError(res, err.message, "Failed to delete task");
