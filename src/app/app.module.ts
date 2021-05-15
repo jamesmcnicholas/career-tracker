@@ -5,10 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
-import { ContactDetailsComponent } from './contacts/contact-details/contact-details.component';
-import { ContactListComponent } from './contacts/contact-list/contact-list.component';
-import { EventDetailsComponent } from './events/event-details/event-details.component';
-import { EventListComponent } from './events/event-list/event-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProgressionComponent } from './progression/progression.component';
 import { LevelsComponent } from './progression/levels/levels.component';
@@ -41,10 +37,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
 @NgModule({
   declarations: [
     AppComponent,
-    ContactDetailsComponent,
-    ContactListComponent,
-    EventDetailsComponent,
-    EventListComponent,
     ProgressionComponent,
     LevelsComponent,
     StreamsComponent,
