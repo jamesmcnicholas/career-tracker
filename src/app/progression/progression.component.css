@@ -11,3 +11,34 @@
     width: 100%;
     padding-left: 1rem;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+    margin-left: 5%;
+}
+
+.classA {
+    width: 25%;
+    margin-right: 20px;
+}
+.classB {
+    width: 75%;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+} 
+
+h1 {
+    text-align: right;
+    float: right;
+}
+
+img {
+    float: left;
+    display: block;
+    margin-right: auto;
+    width: 10%;
+}

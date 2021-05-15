@@ -15,6 +15,11 @@ import { LevelsComponent } from './progression/levels/levels.component';
 import { StreamsComponent } from './progression/streams/streams.component';
 import { TasksComponent } from './progression/tasks/tasks.component';
 import { TaskService } from './progression/tasks/task.service';
+import { StreamService } from './progression/streams/stream.service';
+import { ProgressionService } from './progression/progression.service';
+import { UserTasksComponent } from './progression/tasks/user-tasks/user-tasks.component';
+import { PdpComponent } from './progression/pdp/pdp.component';
+import { LinksComponent } from './progression/links/links.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -43,7 +48,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ProgressionComponent,
     LevelsComponent,
     StreamsComponent,
-    TasksComponent
+    TasksComponent,
+    UserTasksComponent,
+    PdpComponent,
+    LinksComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService]
     },
-    TaskService
+    TaskService, StreamService, ProgressionService
   ],
   bootstrap: [AppComponent]
 })

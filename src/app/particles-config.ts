@@ -60,8 +60,8 @@ export const ParticlesConfig = {
         "detect_on": "canvas",
         "events": {
         "onhover": {
-            "enable": false,
-            "mode": "bubble"
+            "enable": true,
+            "mode": "grab"
         },
         "onclick": {
             "enable": true,
@@ -71,7 +71,7 @@ export const ParticlesConfig = {
         },
         "modes": {
         "grab": {
-            "distance": 400,
+            "distance": 100,
             "line_linked": {
             "opacity": 1
             }
@@ -84,7 +84,7 @@ export const ParticlesConfig = {
             "speed": 3
         },
         "repulse": {
-            "distance": 200,
+            "distance": 100,
             "duration": 0.4
         },
         "push": {
