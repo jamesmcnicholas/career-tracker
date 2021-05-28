@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 
 
 @Component({
@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './progression.component.html',
   styleUrls: ['./progression.component.css']
 })
+
+@Injectable()
 export class ProgressionComponent implements OnInit {
+
+  edit: boolean = false;
 
   constructor() { }
 
