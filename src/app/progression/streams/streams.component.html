@@ -3,10 +3,13 @@
         *ngFor='let stream of streams'
         type="button" 
         class="list-group-item list-group-item-action"
-        (click)="selectStream(stream)">
-        <i class="fas fa-users"></i>
-        Project and Service Management</button>
-    <button type="button" class="list-group-item list-group-item-action">
+        (click)="selectStream(stream)"
+        [ngClass]="{'active': getSelectedStream(stream)}">
+        <button *ngIf="progressionComponent.edit" type="button" class="btn btn-danger" (click)="deleteStream(stream._id)" style="margin-right: 5px;">-</button>
+        <!-- <i class="fas fa-users"></i> -->
+        {{stream.name}}
+    </button>
+    <!-- <button type="button" class="list-group-item list-group-item-action">
         <i class="fas fa-chart-bar"></i>
         Business Analysis </button>
     <button type="button" class="list-group-item list-group-item-action">
@@ -44,7 +47,9 @@
         Applications Management</button>
     <button type="button" class="list-group-item list-group-item-action">
         <i class="fas fa-sync-alt"></i>
-        Corporate Functions</button>
-    <button type="button" class="btn btn-light">
-        Add Stream</button>
+        Corporate Functions</button> -->
+    <div>
+        <input *ngIf="progressionComponent.edit" type="text" class="form-control" name="new-stream-name" [(ngModel)]="newStream.name" placeholder="Stream Name"/>
+        <button *ngIf="progressionComponent.edit && newStream.name" type="button" class="btn btn-success" (click)="createStream(newStream)">+</button>
+    </div>
 </div>

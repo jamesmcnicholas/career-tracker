@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProgressionService } from '../progression.service';
 import { Task } from './task';
 import { TaskService } from './task.service';
+import { ProgressionComponent } from '../progression.component'
+import { Stream } from '../streams/stream';
 
 @Component({
   selector: 'tasks',
@@ -15,10 +17,14 @@ export class TasksComponent implements OnInit {
   description: string;
 
   tasks: Task[]
-  public selectedLevel = "";
-  public selectedStream = "";
+  public selectedLevel = "0";
+  public selectedStream: Stream = { name: "Not selected", _id: "Not selected" }
 
-  constructor(private taskService: TaskService, private progressionService: ProgressionService) {
+  constructor(
+    private taskService: TaskService,
+    private progressionService: ProgressionService, 
+    public progressionComponent: ProgressionComponent){
+
     this.tasks = [];
 
     this.progressionService.selectedLevel$.subscribe((level) => {
@@ -26,16 +32,23 @@ export class TasksComponent implements OnInit {
       taskService.getTasks(this.selectedStream, this.selectedLevel).then((tasks: Task[]) => {
         if (tasks) {
           this.tasks = tasks.map((task) => {
-            if (!task.description) {
-              task.description = ''
-            }
             return task;
           });
         }
       });
-      console.log(level + " tasks arrived");
-
     })
+
+    this.progressionService.selectedStream$.subscribe((stream) => {
+      this.selectedStream = stream;
+      taskService.getTasks(this.selectedStream, this.selectedLevel).then((tasks: Task[]) => {
+        if (tasks) {
+          this.tasks = tasks.map((task) => {
+            return task;
+          });
+        }
+      });
+    })
+
   }
 
   ngOnInit(): void {
@@ -72,12 +85,12 @@ export class TasksComponent implements OnInit {
   }
 
   createNewTask(description) {
+    console.log("STREAM ID: " + this.selectedStream._id)
     var task: Task = {
-      _streamId: '',
+      _streamId: this.selectedStream._id,
       description: description,
       level: parseInt(this.selectedLevel)
     }
-    console.log(task)
     this.task = task;
     this.createTask(task);
   };
@@ -106,6 +119,10 @@ export class TasksComponent implements OnInit {
           });
         }
       });
+  }
+
+  updateStatus(value){
+    console.log(value)
   }
 
 }

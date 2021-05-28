@@ -130,8 +130,6 @@ app.get("/api/streams", function (req, res) {
 
 app.post("/api/streams", function (req, res) {
     var newStream = req.body;
-    newStream.createDate = new Date();
-
     if (!req.body.name) {
         handleError(res, "Invalid user input", "Must provide name", 400);
     } else {
@@ -182,10 +180,12 @@ app.delete("/api/streams/:id", function (req, res) {
 });
 
 //GET Tasks
-app.get("/api/tasks/:level", function (req, res) {
-    if(req.params.level) {
+app.get("/api/tasks/:level&:streamId", function (req, res) {
+    if(req.params.level && req.params.streamId) {
         var level = parseInt(req.params.level)
-        db.collection(TASKS_COLLECTION).find({level: level}).toArray(function (err, doc) {
+        console.log(req.params)
+
+        db.collection(TASKS_COLLECTION).find({level: level, _streamId: req.params.streamId}).toArray(function (err, doc) {
             if (err) {
                 handleError(res, err.message, "Failed to get tasks");
             } else {

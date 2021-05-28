@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Task } from './task';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Stream } from '../streams/stream';
 
 @Injectable()
 export class TaskService {
@@ -18,10 +19,11 @@ export class TaskService {
     .catch(this.handleError);
   }
 
-  getTasks(streamId: string, level: string): Promise<void | Task[]> {
+  getTasks(stream: Stream, level: string): Promise<void | Task[]> {
     let params = new HttpParams().set('level', level);
-    // params = params.append('stream', stream)
-    var url = this.tasksUrl + '/' + level;
+    params = params.append('streamId', stream._id)
+
+    var url = this.tasksUrl + '/' + level + "&" + stream._id;
     return this.http.get(url, {observe: 'body' ,responseType: 'json'}).toPromise()
     .then(response => response as Task[])
     .catch(this.handleError);

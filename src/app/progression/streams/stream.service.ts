@@ -19,10 +19,10 @@ export class StreamService {
   }
   
   // POST /api/streams
-  createStream(newStream: Stream): Promise<void | Stream[]> {
+  createStream(newStream: Stream): Promise<void | Stream> {
     return this.http.post(this.streamsUrl, newStream, {responseType: 'json'})
       .toPromise()
-      .then(response => response as Stream[])
+      .then(response => response as Stream)
       .catch(this.handleError);
   }
   
