@@ -12,30 +12,30 @@ export class UserTaskService {
    }
 
   // GET /api/usertasks
-  getTasks(): Promise<void | UserTask[]> {
+  getUserTasks(): Promise<void | UserTask[]> {
     return this.http.get(this.userTasksUrl, {observe: 'body' ,responseType: 'json'}).toPromise()
     .then(response => response as UserTask[])
     .catch(this.handleError);
   }
   
   // POST /api/usertasks
-  createTask(newTask: UserTask): Promise<void | UserTask> {
+  createUserTask(newTask: UserTask): Promise<void | UserTask> {
     return this.http.post(this.userTasksUrl, newTask, {responseType: 'json'})
       .toPromise()
       .then(response => response as UserTask)
       .catch(this.handleError);
   }
   
-  // DELETE /api/tasks/:id
-  deleteTask(delTaskId: String): Promise<void | String> {
+  // DELETE /api/usertasks/:id
+  deleteUserTask(delTaskId: String): Promise<void | String> {
     return this.http.delete(this.userTasksUrl + '/' + delTaskId)
                 .toPromise()
                 .then(response => response as String)
                 .catch(this.handleError);
   }
   
-  // put("/api/tasks/:id")
-  updateTask(putTask: UserTask): Promise<void | UserTask> {
+  // PUT ("/api/usertasks/:id")
+  updateUserTask(putTask: UserTask): Promise<void | UserTask> {
     var putUrl = this.userTasksUrl + '/' + putTask._id;
     return this.http.put(putUrl, putTask, {responseType: 'json'})
                 .toPromise()
