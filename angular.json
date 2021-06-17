@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "keycloak-js"
+           ],
             "outputPath": "dist/mean-contactlist-angular2",
             "index": "src/index.html",
             "main": "src/main.ts",
