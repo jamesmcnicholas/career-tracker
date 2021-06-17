@@ -23,7 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
     "@babel/parser": "^7.12.11",
-    "keycloak-angular": "^8.0.1",
+    "keycloak-angular": "^8.2.0",
     "keycloak-js": "^11.0.2",
     "package.json": "^2.0.1",
     "particles.js": "^2.0.0",
