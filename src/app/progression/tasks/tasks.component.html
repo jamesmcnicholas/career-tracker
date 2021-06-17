@@ -1,8 +1,9 @@
-<table class="table">
+<h3 *ngIf="tasks.length==0">There are no tasks for {{selectedStream.name}} at Level {{selectedLevel+1}}</h3>
+<table class="table" *ngIf="tasks.length>0">
     <thead>
         <tr>
             <th scope="col">Requirement</th>
-            <th scope="col">Status</th>
+            <th scope="col">Status (RAG)</th>
             <th scope="col">Notes</th>
         </tr>
     </thead>
@@ -11,12 +12,12 @@
             <th scope="row">{{instance.description}}</th>
             <td>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioGreen" (click)="updateStatus(1)">
-                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioAmber" (click)="updateStatus(0.5)">
-                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioRed" (click)="updateStatus(0)">
+                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioRed" (click)="updateStatus(0, instance._id)" [checked]="getUserTaskStatus(instance._id)==0">
+                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioAmber" (click)="updateStatus(1, instance._id)" [checked]="getUserTaskStatus(instance._id)==1">
+                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioGreen" (click)="updateStatus(2, instance._id)" [checked]="getUserTaskStatus(instance._id)==2" >
                 </div>
             </td>
-            <td><input type="text" class="form-control" /></td>
+            <td><input #notes type="text" class="form-control" (blur)="updateNotes(notes.value, instance._id)"/></td>
             <td *ngIf="progressionComponent.edit"><button type="button" class="btn btn-danger" (click)="deleteTask(instance._id)">Remove</button></td>
         </tr>
         <tr *ngIf="progressionComponent.edit">
@@ -25,8 +26,7 @@
         </tr>
     </tbody>
 </table>
-
-
-
-
-
+<div *ngIf="userTasks && tasks.length>0" class="progress">
+    <div id="taskProgressBar" class="progress-bar" role="progressbar" aria-valuenow="progressPct" aria-valuemin="0"
+        aria-valuemax="100" [style.width.%]="progressPct">{{progressPct}}% - Level {{(selectedLevel+1)}}</div>
+</div>

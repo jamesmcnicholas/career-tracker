@@ -13,8 +13,8 @@ const keycloakKeyPath = '/auth/realms/master/protocol/openid-connect/userinfo';
 
 // Database collections for storing objects
 var STREAMS_COLLECTION = "streams";
-var EVENTS_COLLECTION = "events";
 var TASKS_COLLECTION = "tasks"
+var USERTASKS_COLLECTION = "usertasks"
 
 // Start the server with CORS enabled
 var app = express();
@@ -247,28 +247,34 @@ app.delete("/api/tasks/:id", function (req, res) {
 });
 
 // UserTasks by ID
-app.get("/api/usertasks/:id", function (req, res) {
-    db.collection(TASKS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function (err, doc) {
-        if (err) {
-            handleError(res, err.message, "Failed to get event");
-        } else {
-            res.status(200).json(doc);
-        }
-    })
+app.get("/api/usertasks/:userId", function (req, res) {
+    if(req.params.userId){
+        db.collection(USERTASKS_COLLECTION).find({_userId: req.params.userId}).toArray(function (err, doc) {
+            if (err) {
+                handleError(res, err.message, "Failed to get usertasks");
+            } else {
+                res.status(200).json(doc);
+            }
+        });
+    }
 });
 
 app.put("/api/usertasks/:id", function (req, res) {
     var updateDoc = req.body;
     delete updateDoc._id;
 
-    db.collection(TASKS_COLLECTION).updateOne({ _id: new ObjectID(req.params.id) }, function (err, result) {
-        if (err) {
-            handleError(res, err.message, "Failed to update task");
-        } else {
-            updateDoc._id = req.params.id;
-            res.status(200).json(updateDoc);
-        }
-    })
+    try{
+        db.collection(USERTASKS_COLLECTION).findOneAndUpdate({_id: new ObjectID(req.params.id)}, { $set: updateDoc}, function (err, result) {
+            if (err) {
+                handleError(res, err.message, "Failed to update usertask");
+            } else {
+                updateDoc._id = req.params.id;
+                res.status(200).json(updateDoc);
+            }
+        });
+    } catch (error) {
+        console.log(error)
+    }
 });
 
 app.delete("/api/usertasks/:id", function (req, res) {
@@ -281,3 +287,19 @@ app.delete("/api/usertasks/:id", function (req, res) {
     })
 });
 
+app.post("/api/usertasks", function (req, res) {
+    var newUserTask = req.body;
+
+    if (!(req.body.notes || req.body.status)) {
+        handleError(res, "Invalid user input", "Must provide notes or RAG status update", 400);
+        console.log("notes: " + req.body.notes + " status " + req.body.status)
+    } else {
+        db.collection(USERTASKS_COLLECTION).insertOne(newUserTask, function (err, doc) {
+            if (err) {
+                handleError(res, err.message, "Failed to create new usertask");
+            } else {
+                res.status(201).json(doc.ops[0]);
+            }
+        });
+    }
+});

@@ -16,6 +16,8 @@ import { ProgressionService } from './progression/progression.service';
 import { UserTasksComponent } from './progression/tasks/user-tasks/user-tasks.component';
 import { PdpComponent } from './progression/pdp/pdp.component';
 import { LinksComponent } from './progression/links/links.component';
+import { UserTaskService } from './progression/tasks/user-tasks/user-task.service';
+import { NavigationComponent } from './navigation/navigation.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -43,7 +45,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     TasksComponent,
     UserTasksComponent,
     PdpComponent,
-    LinksComponent
+    LinksComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService]
     },
-    TaskService, StreamService, ProgressionService
+    TaskService, StreamService, ProgressionService, UserTaskService
   ],
   bootstrap: [AppComponent]
 })

@@ -12,10 +12,12 @@ export class UserTaskService {
    }
 
   // GET /api/usertasks
-  getUserTasks(): Promise<void | UserTask[]> {
-    return this.http.get(this.userTasksUrl, {observe: 'body' ,responseType: 'json'}).toPromise()
+  getUserTasks(userId: string): Promise<void | UserTask[]> {
+    var url = this.userTasksUrl + '/' + userId;
+    return this.http.get(url, {observe: 'body' ,responseType: 'json'}).toPromise()
     .then(response => response as UserTask[])
     .catch(this.handleError);
+
   }
   
   // POST /api/usertasks
