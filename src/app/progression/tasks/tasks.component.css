@@ -67,3 +67,7 @@ input[type='radio']:after {
     visibility: visible;
     border: 2px solid white;
 }
+
+#taskProgressBar {
+    background: linear-gradient(to right, rgba(227,25,55,1) 0%, rgba(168,36,101,1) 60%, rgba(82,54,171,1) 100%);
+}
