@@ -1,0 +1,49 @@
+.button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    margin: auto;
+  }
+  
+  .button:hover {
+    line-height: 21px;
+    border-bottom: 2px solid #5336aa; 
+  }
+  
+  
+  .main:hover::before {
+    content: "";
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position:absolute;
+    background-color:blue;
+    transition: 0.5s;
+    filter: brightness(50%);
+  }
+  
+  
+  .navigation {
+      text-align: center;
+      margin: auto;
+      border-width: 2px;
+      border-style: none none solid;
+      border-color: #d2d2d2;
+  }
+  
+  img {
+      padding: 10px 16px;
+      float: left;
+      display: block;
+      margin-right: auto;
+      width:100px;
+  }
+  

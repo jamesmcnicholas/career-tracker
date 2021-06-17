@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
 
   public authenticated: boolean;
+  public username: string;
 
   constructor(
     protected readonly router: Router,
@@ -25,8 +26,12 @@ export class AuthGuard implements CanActivate {
       await this.keycloak.login({
         redirectUri: window.location.origin + state.url,
       });
-
     } 
+
+    await this.keycloak.loadUserProfile()
+
+    this.username = await this.keycloak.getUsername();
+    // this.username = await this.keycloak.getUserRoles();
     
     return this.authenticated;
   }

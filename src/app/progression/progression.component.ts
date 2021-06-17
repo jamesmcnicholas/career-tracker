@@ -1,4 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
+import { AuthGuard } from '../common/guards/auth.guard';
 
 
 @Component({
@@ -11,8 +12,11 @@ import { Component, Injectable, OnInit } from '@angular/core';
 export class ProgressionComponent implements OnInit {
 
   edit: boolean = false;
+  username: string
 
-  constructor() { }
+  constructor(authGuard: AuthGuard) {
+      this.username = authGuard.username;
+   }
 
   ngOnInit(): void {
 
