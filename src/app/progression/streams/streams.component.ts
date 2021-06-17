@@ -31,7 +31,7 @@ export class StreamsComponent implements OnInit {
           return stream;
         });
       }
-    });
+    }).then(streams => {this.selectStream(this.streams[0])});
     this.progressionService.selectedStream(this.selectedStream);
     this.newStream = {
       name: ""

@@ -1,8 +1,9 @@
-<div class="list-group">
+<div class="list-group list-group-flush">
     <button 
         *ngFor='let in of counter(7) | slice:1; let i = index;' 
         type="button" 
-        class="list-group-item list-group-item-action active" 
+        id="levelButton{{i+1}}"
+        class="list-group-item" 
         (click)="selectLevel(i)"
         [ngClass]="{'active': getSelectedLevel(i)}">
         Level {{i+1}}
