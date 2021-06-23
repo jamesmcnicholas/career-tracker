@@ -8,11 +8,14 @@ import { AuthGuard } from '../common/guards/auth.guard';
 })
 export class NavigationComponent implements OnInit {
   username = "";
+  authGuard;
 
-
-  constructor(authGuard: AuthGuard) { this.username = authGuard.username}
+  constructor(authGuard: AuthGuard) { 
+    this.authGuard = authGuard;
+    this.username = authGuard.username}
 
   ngOnInit(): void {
+    this.username = this.authGuard.username;
   }
 
 }
