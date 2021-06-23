@@ -1,1 +1,23 @@
+<div class=container-fluid>
 <h2>PDP Generator</h2>
+<div *ngIf="this.tasks.length>0" class=container-fluid></div>
+<thead>
+    <tr>
+        <th scope="col" style="padding-right: 10px;"><h3>Task</h3></th>
+        <th scope="col"><h3>Selection</h3></th>
+    </tr>
+</thead>
+<tbody>
+    <tr *ngFor="let instance of tasks">
+        <td scope="row" style="word-wrap: break-word;">{{instance.description}}</td>
+        <td style="float: right;">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" (click)="toggleTask(instance._id)" value="" id="flexCheckDefault">
+            
+          </div>
+        </td>
+    </tr>
+</tbody>
+
+<button class="btn btn-primary" style="margin-top: 10px;" (click)="generate()">Generate Word Document</button>
+</div>
