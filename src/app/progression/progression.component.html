@@ -1,21 +1,9 @@
-<div class="container">
-    <div style="width: 68%;">
-        <div class="row level-row">
-            <div class="col-sm">
-                <h1>UK Career Progression Tracker</h1>
-            </div>
-        </div>
-    </div>
+<div class="container-fluid">
+    <h1>UK Career Progression Tracker</h1>
 </div>
 
 <!-- Main container -->
-<div class="container">
-    <!-- Left panel -->
-    <div class="classA">
-
-    </div>
-
-    <!-- Centre Panel -->
+<div class="container-fluid">
     <div class="classB">
         <div class="row table-row">
             <div class="col-sm">
@@ -26,16 +14,11 @@
                 <tasks></tasks>
             </div>
         </div>
-        Edit Mode
-        <label class="switch">
-            <input type="checkbox">
-            <span class="slider" (click)="edit=!edit"></span>
-        </label>
+
+        <button class="btn btn-primary" (click)="edit=!edit">Toggle Edit Mode</button>
     </div>
 </div>
 
 <!-- PDP generator -->
-<div class="container">
-    <pdp></pdp>
-</div>
+<pdp></pdp>
    

@@ -1,3 +1,26 @@
 h2 {
     text-align: center;
 }
+.container-fluid{
+    background-color: #efefef;
+    float: center;
+    padding-left: 20%;
+}
+
+.p {
+    background-color: #eaeaf5;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    border-left: 4;
+    border-color: linear-gradient(to right, rgba(227,25,55,1) 0%, rgba(168,36,101,1) 60%, rgba(82,54,171,1) 100%);
+    padding: 11.5px 45px 11.5px 23px;
+    font-weight: 600;
+    background: 0 none;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #200a58;
+    
+}
