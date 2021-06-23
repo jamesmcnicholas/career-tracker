@@ -71,18 +71,28 @@ export class TasksComponent implements OnInit {
 
     
 
-
+      // Subscribe to the currently selected variable Observable
       this.progressionService.selectedLevel$.subscribe((level) => {
+        // When it changes, update the local variable
         this.selectedLevel = level;
-          this.taskService.getTasks(this.selectedStream, this.selectedLevel).then((tasks: Task[]) => {
+        // Grab the tasks pertaining to the selected Stream and Level from the server
+        this.taskService.getTasks(this.selectedStream, this.selectedLevel).then((tasks: Task[]) => {
+          // THEN populate the local tasks list
           if (tasks) {
             this.tasks = tasks.map((task) => {
               return task;
             });
           }
-        }).then(tasks => this.updateProgressBar());
-        
-      })
+          // THEN, only once the list of Tasks is received, grab the UserTasks
+        }).then(tasks => {this.userTaskService.getUserTasks(this.username).then((userTasks: UserTask[]) => {
+          if (userTasks) {
+            this.userTasks = userTasks.map((userTask) => {
+              return userTask;
+            });
+          }
+          // FINALLY, once both Tasks and UserTasks are populated, update the progress bar
+        }).then(userTasks => this.updateProgressBar());});
+      });
   
       this.progressionService.selectedStream$.subscribe((stream) => {
         this.selectedStream = stream;
@@ -92,7 +102,13 @@ export class TasksComponent implements OnInit {
               return task;
             });
           }
-        }).then(tasks => this.updateProgressBar());
+        }).then(tasks => {this.userTaskService.getUserTasks(this.username).then((userTasks: UserTask[]) => {
+          if (userTasks) {
+            this.userTasks = userTasks.map((userTask) => {
+              return userTask;
+            });
+          }
+        }).then(userTasks => this.updateProgressBar());});
         
       })
   }
