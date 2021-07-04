@@ -212,36 +212,48 @@ export class TasksComponent implements OnInit {
 
   getUserTaskNotes(taskId){
     if (!this.userTasks){
-      return -1;
+      return "";
     } else {
       var foundUserTask = this.userTasks.find(userTask => {return userTask._taskId == taskId});
       if (foundUserTask){
         return foundUserTask.notes;
       }
-      return -1
+      return ""
     }
   }
 
+
+  /*
+    Calculates progress bar percentage
+    Each task is assigned a score
+    Red = 0, Yellow = 1, Green = 2
+    Max score = # of tasks * 2
+  */
   updateProgressBar(){
     var total = 0
     var max = 0
+
     if(this.tasks.length > 0){
       this.tasks.forEach(task => {
         max = max + 2
+        // Loop through each task and find its usertask
         this.userTasks.forEach(userTask => {
           if(userTask._taskId == task._id) {
+            // Add the usertask value to the total
             total = total + userTask.status.valueOf();
           }
         }); 
       });
+
       if (max==0){
         console.log("No UserTasks, cannot update percentage")
         console.log(this.tasks)
       } else {
-      this.progressPct = (100 * (total/max)).toFixed(2)
+        this.progressPct = (100 * (total/max)).toFixed(2)
       }
+
     } else { 
-      console.log("cannot update percentage")
+      console.log("No Tasks, cannot update percentage")
       this.progressPct = 0
     }
     

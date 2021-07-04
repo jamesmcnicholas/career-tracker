@@ -1,5 +1,13 @@
-<h3 *ngIf="tasks.length==0 && !progressionComponent.edit">There are no tasks for {{selectedStream.name}} at Level {{selectedLevel+1}}</h3>
-<table class="table table-hover" *ngIf="tasks.length>0 || progressionComponent.edit">
+<!-- Display message if there are no tasks for the selected level AND user is not editng -->
+<h3 *ngIf="tasks.length==0 && !progressionComponent.edit">
+    There are no tasks for {{selectedStream.name}} at Level {{selectedLevel+1}}
+</h3>
+
+<!-- Tasks table begin, display if there are tasks OR user is editing -->
+<table 
+class="table table-hover" 
+*ngIf="tasks.length>0 || progressionComponent.edit">
+    <!-- Tasks table headers -->
     <thead>
         <tr>
             <th scope="col">Requirement</th>
@@ -7,26 +15,102 @@
             <th scope="col">Notes</th>
         </tr>
     </thead>
+
+    <!-- Table body -->
     <tbody>
-        <tr *ngFor="let instance of tasks" [class.bg-danger]="getUserTaskStatus(instance._id) == 0" [class.bg-warning]="getUserTaskStatus(instance._id) == 1" [class.bg-success]="getUserTaskStatus(instance._id) == 2">
-            <th scope="row" style="word-wrap: break-word;">{{instance.description}}</th>
+        <!-- Create a table row for each task, set background colour to status -->
+        <tr 
+        *ngFor="let instance of tasks" 
+        [class.bg-danger]="getUserTaskStatus(instance._id) == 0"
+        [class.bg-warning]="getUserTaskStatus(instance._id) == 1"
+        [class.bg-success]="getUserTaskStatus(instance._id) == 2">
+            <!-- Column for task description, wrap text to fit -->
+            <th 
+                scope="row" 
+                style="word-wrap: break-word;">
+                {{instance.description}}
+            </th>
+            <!-- Column for RAG status, with radio buttons -->
             <td>
+                <!-- Radio buttons, update status on click -->
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioRed" (click)="updateStatus(0, instance._id)" [checked]="getUserTaskStatus(instance._id)==0">
-                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioAmber" (click)="updateStatus(1, instance._id)" [checked]="getUserTaskStatus(instance._id)==1">
-                    <input class="form-check-input" type="radio" name="statusRadio{{instance._id}}" id="statusRadioGreen" (click)="updateStatus(2, instance._id)" [checked]="getUserTaskStatus(instance._id)==2" >
+                    <input 
+                        class="form-check-input" 
+                        type="radio" 
+                        name="statusRadio{{instance._id}}" 
+                        id="statusRadioRed"
+                        (click)="updateStatus(0, instance._id)" 
+                        [checked]="getUserTaskStatus(instance._id)==0">
+                    
+                    <input 
+                        class="form-check-input" 
+                        type="radio" 
+                        name="statusRadio{{instance._id}}"
+                        id="statusRadioAmber" 
+                        (click)="updateStatus(1, instance._id)"
+                        [checked]="getUserTaskStatus(instance._id)==1">
+                    
+                    <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="statusRadio{{instance._id}}"
+                    id="statusRadioGreen" 
+                    (click)="updateStatus(2, instance._id)"
+                    [checked]="getUserTaskStatus(instance._id)==2">
                 </div>
             </td>
-            <td><input #notes type="text" class="form-control" [text]="getUserTaskNotes(instance._id)" (blur)="updateNotes(notes.value, instance._id)"/></td>
-            <td *ngIf="progressionComponent.edit"><button type="button" class="btn btn-danger" (click)="deleteTask(instance._id)">Remove</button></td>
+            <!-- Column for user notes, update when unfocused -->
+            <td>
+                <input 
+                #notes 
+                type="text" 
+                class="form-control" 
+                [ngModel]="getUserTaskNotes(instance._id)"
+                (blur)="updateNotes(notes.value, instance._id)">
+            </td>
+            <!-- Button for removing tasks in edit mode -->
+            <td *ngIf="progressionComponent.edit">
+                <button 
+                    type="button" 
+                    class="btn btn-danger"
+                    (click)="deleteTask(instance._id)">
+                    Remove
+                </button>
+            </td>
         </tr>
+        <!-- Extra row for adding tasks in edit mode -->
         <tr *ngIf="progressionComponent.edit">
-            <th><input type="text" class="form-control" name="task-description" [(ngModel)]="task.description" placeholder="Description"/></th>
-            <td *ngIf="task.description"><button type="button" class="btn btn-primary" (click)="createNewTask(task.description)">Add Task</button></td>
+            <th>
+                <!-- Text box for task description -->
+                <input 
+                type="text" class="form-control" 
+                name="task-description" 
+                [(ngModel)]="task.description"
+                placeholder="Description" />
+            </th>
+            <!-- Add task button, if task has a description -->
+            <td *ngIf="task.description">
+                <button 
+                    type="button" 
+                    class="btn btn-success"
+                    (click)="createNewTask(task.description)">
+                    Add Task
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>
+
+<!-- Progress bar section -->
 <div *ngIf="userTasks && tasks.length>0" class="progress">
-    <div id="taskProgressBar" class="progress-bar" role="progressbar" aria-valuenow="progressPct" aria-valuemin="0"
-        aria-valuemax="100" [style.width.%]="progressPct">{{progressPct}}% - Level {{(selectedLevel+1)}}</div>
+    <div 
+    id="taskProgressBar" 
+    class="progress-bar" 
+    role="progressbar"
+    aria-valuenow="progressPct" 
+    aria-valuemin="0"
+    aria-valuemax="100" 
+    [style.width.%]="progressPct">
+    {{progressPct}}% - Level {{(selectedLevel+1)}}
+</div>
 </div>
