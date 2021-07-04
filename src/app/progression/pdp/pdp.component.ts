@@ -39,6 +39,7 @@ export class PdpComponent implements OnInit {
 
   ngOnInit(){
     this.selectedTasks = []
+    this.tasks = []
 
     this.streamService.getStreams().then((streams: Stream[]) => {this.selectedStream = streams[0]}).then(selectedStream => {
       this.taskService.getTasks(this.selectedStream, this.selectedLevel)
@@ -86,14 +87,33 @@ export class PdpComponent implements OnInit {
   }
     
   generate() {
+    var image 
+    var blob = null;
+    var xhr = new XMLHttpRequest(); 
+    xhr.open("GET", './../../../assets/img/PDP_Header.png'); 
+    xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
+    xhr.onload = function() 
+    {
+      blob = xhr.response;//xhr.response is now a blob object
+      console.log("Blob: " + blob)
+      var file = new File([blob], 'PDP_Header.png', {type: 'image/png', lastModified: Date.now()});
+      console.log(file);   
 
-    // const image = new ImageRun({
-    //   data: fs.readFile("/../../../assets/img/PDP_Header.png"),
-    //   transformation: {
-    //       width: 100,
-    //       height: 100,
-    //   },
-    // });
+      var reader = new FileReader() 
+      reader.readAsDataURL(file);
+
+      console.log(reader.result)
+      image = new ImageRun({
+      data: reader.result,
+        transformation: {
+            width: 100,
+            height: 100,
+        },
+      });
+  
+    } 
+    xhr.send()
+    
 
     // var image = new ImageRun({data: btoa("/../../../assets/img/PDP_Header.png"), transformation:  {width: 20, height: 20}});
 
@@ -185,7 +205,7 @@ export class PdpComponent implements OnInit {
         {
           headers: {
             default: new Header({
-                children: [new Paragraph({text: "CGI", style: "logo"}), new Paragraph({text: "Personal Development Plan", style: "textFields"})],
+                children: [new Paragraph({text: "CGI", style: "logo"}), new Paragraph({text: "Personal Development Plan", style: "textFields"}), image],
         }),
       },
         properties: {page: {size: {orientation: PageOrientation.LANDSCAPE}}},
