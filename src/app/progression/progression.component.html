@@ -1,24 +1,33 @@
+
+<div id="particles-js" style="height: 100px;"></div>
+
+<!-- navbar, included to access Username -->
+<navigation></navigation>
+
 <div class="container-fluid">
-    <h1>UK Career Progression Tracker</h1>
+    <h1 style="float: left;">UK Career Progression Tracker</h1>
+    <button *ngIf='administrator' class="btn btn-warning" (click)="edit=!edit" style="float: right; margin: 2rem;">{{!!edit ? "Finish Editing" : "Enter Edit Mode"}} </button>
 </div>
 
 <!-- Main container -->
-<div class="container-fluid">
+<div class="container-fluid" id='progression'>
     <div class="classB">
         <div class="row table-row">
             <div class="col-sm">
             <streams></streams>
             </div>
-            <div class="col-sm w-100">
+            <div class="col-sm w-100" >
                 <levels></levels>
                 <tasks></tasks>
             </div>
         </div>
 
-        <button class="btn btn-primary" (click)="edit=!edit">Toggle Edit Mode</button>
+        
     </div>
 </div>
 
 <!-- PDP generator -->
-<pdp></pdp>
+<pdp id='pdp'></pdp>
+
+<links id='links'></links>
    

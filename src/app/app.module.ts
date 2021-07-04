@@ -17,7 +17,7 @@ import { UserTasksComponent } from './progression/tasks/user-tasks/user-tasks.co
 import { PdpComponent } from './progression/pdp/pdp.component';
 import { LinksComponent } from './progression/links/links.component';
 import { UserTaskService } from './progression/tasks/user-tasks/user-task.service';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationComponent } from './progression/navigation/navigation.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>

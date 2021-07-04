@@ -10,6 +10,7 @@ export class AuthGuard implements CanActivate {
 
   public authenticated: boolean;
   public username: string;
+  public roles;
 
   constructor(
     protected readonly router: Router,
@@ -31,8 +32,15 @@ export class AuthGuard implements CanActivate {
     await this.keycloak.loadUserProfile()
 
     this.username = await this.keycloak.getUsername();
-    // this.username = await this.keycloak.getUserRoles();
+    this.roles = await this.keycloak.getUserRoles();
     
     return this.authenticated;
+  }
+
+  async logout(){
+    console.log("Run")
+    this.keycloak.logout(
+      window.location.origin
+    );
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ParticlesConfig } from './particles-config';
+import { ParticlesConfig } from './progression/particles-config';
 
 declare let particlesJS: any; // Required to be properly interpreted by TypeScript.
 
@@ -10,12 +10,4 @@ declare let particlesJS: any; // Required to be properly interpreted by TypeScri
 })
 export class AppComponent {
   title = 'mean-contactlist-angular2';
-
-  public ngOnInit(): void {
-    this.invokeParticles();
-  }
-
-  public invokeParticles(): void {
-    particlesJS('particles-js', ParticlesConfig, function() {});
-  }
 }
