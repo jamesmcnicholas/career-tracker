@@ -1,31 +1,9 @@
 .list-group {
     display:flex;
+    margin-bottom: 0;
 }
 
-#levelButton1.active {
-    background-color: rgba(227,25,55,1);
-}
-
-#levelButton2.active {
-    background-color: rgba(205,29,72,1);
-}
-
-#levelButton3.active {
-    background-color: rgba(191,32,83,1);
-}
-
-#levelButton4.active {
-    background-color: rgba(178,34,93,1);
-}
-
-#levelButton5.active {
-    background-color: rgba(158,38,109,1);
-}
-
-#levelButton6.active {
-    background-color: rgba(110,49,149,1);
-}
-
-#levelButton7.active {
-    background-color: rgba(82,54,171,1);
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover{
+    background-color: #5236AB;
+    border-color: #5236AB;
 }
