@@ -19,10 +19,15 @@ export class TaskService {
     .catch(this.handleError);
   }
 
+  // GET /api/tasks/<level>/<streamId>
   getTasks(stream: Stream, level: string): Promise<void | Task[]> {
+    // Build the URL from the given parameters
     var url = this.tasksUrl + '/' + level + "&" + stream._id;
+    // Send the HTTP request and await the response
     return this.http.get(url, {observe: 'body' ,responseType: 'json'}).toPromise()
+    // Convert the response to a list of tasks
     .then(response => response as Task[])
+    // Handle any returned error (e.g. stream not found)
     .catch(this.handleError);
   }
   

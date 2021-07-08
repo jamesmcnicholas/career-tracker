@@ -156,24 +156,31 @@ export class TasksComponent implements OnInit {
 
   updateStatus(value, taskId){
     var found: boolean = false
-    var userTask: UserTask = {status: value, notes: "test", _userId: this.username, _taskId: taskId}
-
+    // Create a placeholder task in case one is not found
+    var userTask: UserTask = {
+      status: value, notes: "",
+      _userId: this.username,
+      _taskId: taskId
+    }
+    
+    // Search for an existing UserTask for this task
     this.userTasks.forEach(element => {
         if(element._taskId == taskId) {
+          // Update the placeholder UserTask
           found = true;
           userTask._id = element._id;
           element.status = value;
           userTask.notes = element.notes;
         }
     });
-
+    // Update or create the usertask based on result
     if(found) {
       this.userTaskService.updateUserTask(userTask);
     } else {
       this.userTaskService.createUserTask(userTask);
       this.userTasks.push(userTask)
     }
-
+    // Update the progress bar with the new value
     this.updateProgressBar()
   }
 

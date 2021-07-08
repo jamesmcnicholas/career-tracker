@@ -120,7 +120,7 @@ export class PdpComponent implements OnInit {
 
 
     const date = new Date();
-    var formattedDate = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear()
+    var formattedDate = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear()
     
   
     const table = new Table({

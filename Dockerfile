@@ -1,8 +1,8 @@
 # Create image based on the official Node 10 image from dockerhub
 FROM node:12
 
-ENV http_proxy http://proxy.logica.com:80
-ENV https_proxy http://proxy.logica.com:80
+# ENV http_proxy http://proxy.logica.com:80
+# ENV https_proxy http://proxy.logica.com:80
 
 # Create a directory where our app will be placed
 RUN mkdir -p /app
@@ -20,7 +20,7 @@ RUN npm install
 COPY . /app/
 
 # Expose the port the app runs in
-EXPOSE 4200
+EXPOSE 80
 
 # Serve the app
 CMD ["npm", "start"]
